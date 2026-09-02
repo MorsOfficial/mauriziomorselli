@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>MØRS — Maurizio Morselli</title>
+  <meta name="description" content="MØRS — DJ / Producer. Music, nightlife and creative projects by Maurizio Morselli." />
+  <meta name="theme-color" content="#050505" />
+
+  <meta property="og:title" content="MØRS — Maurizio Morselli" />
+  <meta property="og:description" content="Music. Nightlife. Building things." />
+  <meta property="og:type" content="website" />
+
+  <style>
+    :root{
+      --bg:#050505;
+      --bg-2:#0a0a0a;
+      --panel:#0d0d0d;
+      --text:#f3f3ef;
+      --muted:#94948e;
+      --line:#252525;
+      --line-soft:#171717;
+      --max:1240px;
+      --radius:24px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    html{scroll-behavior:smooth}
+
+    body{
+      background:
+        radial-gradient(circle at 78% 6%,rgba(255,255,255,.05),transparent 28rem),
+        radial-gradient(circle at 20% 58%,rgba(255,255,255,.025),transparent 34rem),
+        var(--bg);
+      color:var(--text);
+      font-family:Arial,Helvetica,sans-serif;
+      line-height:1.45;
+      overflow-x:hidden;
+    }
+
+    a{color:inherit;text-decoration:none}
+    ::selection{background:#fff;color:#000}
+
+    .noise{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.028;
+      z-index:100;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+    }
+
+    .container{
+      width:min(calc(100% - 40px),var(--max));
+      margin:0 auto;
+    }
+
+    .label{
+      font-size:.69rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+
+    .muted{color:var(--muted)}
+
+    .reveal{
+      opacity:0;
+      transform:translateY(20px);
+      transition:opacity .7s ease,transform .7s ease;
+    }
+
+    .reveal.visible{
+      opacity:1;
+      transform:none;
+    }
+
+    /* NAV */
+    nav{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      z-index:80;
+      border-bottom:1px solid transparent;
+      transition:.25s ease;
+    }
+
+    nav.scrolled{
+      background:rgba(5,5,5,.82);
+      backdrop-filter:blur(18px);
+      border-bottom-color:var(--line-soft);
+    }
+
+    .nav-inner{
+      height:70px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+    }
+
+    .wordmark{
+      font-weight:900;
+      letter-spacing:-.045em;
+      font-size:1.06rem;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:24px;
+      list-style:none;
+    }
+
+    .nav-links a{
+      font-size:.78rem;
+      color:#c9c9c4;
+    }
+
+    .nav-links a:hover{color:#fff}
+
+    .nav-cta{
+      border:1px solid #343434;
+      border-radius:999px;
+      padding:9px 13px;
+    }
+
+    .menu-btn{
+      display:none;
+      border:0;
+      background:none;
+      color:#fff;
+      font-size:1.2rem;
+      cursor:pointer;
+    }
+
+    /* HERO */
+    .hero{
+      min-height:100svh;
+      display:flex;
+      align-items:flex-end;
+      padding:118px 0 42px;
+    }
+
+    .hero-topline{
+      display:flex;
+      justify-content:space-between;
+      gap:24px;
+      margin-bottom:24px;
+    }
+
+    .hero-title{
+      font-size:clamp(6.4rem,23vw,18rem);
+      line-height:.72;
+      letter-spacing:-.085em;
+      font-weight:900;
+      margin-left:-.045em;
+    }
+
+    .hero-bottom{
+      border-top:1px solid var(--line);
+      margin-top:34px;
+      padding-top:24px;
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:40px;
+      align-items:end;
+    }
+
+    .hero-copy{
+      max-width:760px;
+      font-size:clamp(1.4rem,3vw,2.45rem);
+      line-height:1.06;
+      letter-spacing:-.035em;
+    }
+
+    .hero-copy span{color:var(--muted)}
+
+    .hero-actions{
+      display:flex;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid #343434;
+      border-radius:999px;
+      padding:11px 16px;
+      font-size:.76rem;
+      transition:.2s ease;
+      background:rgba(255,255,255,.012);
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+      border-color:#666;
+    }
+
+    .btn.primary{
+      background:#fff;
+      border-color:#fff;
+      color:#000;
+    }
+
+    /* STATUS STRIP */
+    .status-strip{
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+    }
+
+    .status-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+    }
+
+    .status-item{
+      min-height:158px;
+      padding:26px;
+      border-right:1px solid var(--line);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .status-item:last-child{border-right:0}
+
+    .status-value{
+      font-size:clamp(2rem,4vw,3.7rem);
+      line-height:.95;
+      font-weight:800;
+      letter-spacing:-.055em;
+    }
+
+    .status-note{
+      color:var(--muted);
+      font-size:.8rem;
+      max-width:230px;
+    }
+
+    /* GENERIC SECTION */
+    .section{
+      padding:104px 0;
+      border-top:1px solid var(--line-soft);
+    }
+
+    .section-head{
+      display:grid;
+      grid-template-columns:180px 1fr;
+      gap:34px;
+      margin-bottom:52px;
+      align-items:start;
+    }
+
+    .section-title{
+      font-size:clamp(2.9rem,7.5vw,7rem);
+      line-height:.88;
+      letter-spacing:-.065em;
+      font-weight:800;
+      max-width:980px;
+    }
+
+    .section-copy{
+      margin-top:20px;
+      color:var(--muted);
+      max-width:720px;
+      font-size:1rem;
+    }
+
+    /* MANIFESTO */
+    .manifesto{
+      display:grid;
+      grid-template-columns:.85fr 1.15fr;
+      gap:16px;
+    }
+
+    .manifesto-card{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:32px;
+      background:linear-gradient(180deg,#0d0d0d,#080808);
+      min-height:360px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .manifesto-card.big{
+      min-height:500px;
+    }
+
+    .manifesto-card h3{
+      font-size:clamp(2rem,4.6vw,4.6rem);
+      line-height:.94;
+      letter-spacing:-.055em;
+      max-width:720px;
+    }
+
+    .manifesto-card p{
+      color:var(--muted);
+      max-width:520px;
+    }
+
+    .manifesto-stack{
+      display:grid;
+      grid-template-rows:1fr 1fr;
+      gap:16px;
+    }
+
+    /* MUSIC */
+    .music-layout{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:16px;
+    }
+
+    .music-card,
+    .proof-card{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:var(--panel);
+      padding:30px;
+    }
+
+    .music-card{
+      min-height:480px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .music-card h3{
+      font-size:clamp(3rem,8vw,7rem);
+      line-height:.85;
+      letter-spacing:-.07em;
+    }
+
+    .release-list{
+      margin-top:42px;
+      border-top:1px solid var(--line);
+    }
+
+    .release{
+      display:grid;
+      grid-template-columns:42px 1fr auto;
+      gap:16px;
+      align-items:center;
+      border-bottom:1px solid var(--line);
+      padding:17px 0;
+    }
+
+    .release small,
+    .release span{
+      color:var(--muted);
+      font-size:.72rem;
+    }
+
+    .release strong{
+      font-size:1.05rem;
+      letter-spacing:-.02em;
+    }
+
+    .proof-card{
+      min-height:480px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      background:
+        radial-gradient(circle at 80% 20%,rgba(255,255,255,.07),transparent 18rem),
+        #0a0a0a;
+    }
+
+    .proof-number{
+      font-size:clamp(4.5rem,11vw,9rem);
+      line-height:.8;
+      letter-spacing:-.08em;
+      font-weight:900;
+    }
+
+    .proof-copy{
+      color:var(--muted);
+      max-width:380px;
+    }
+
+    /* LIVE */
+    .played-wrap{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:18px;
+      background:var(--panel);
+    }
+
+    .played-grid{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .played{
+      min-height:auto;
+      padding:12px 16px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid #303030;
+      border-radius:999px;
+      background:var(--bg);
+      font-size:clamp(.98rem,1.8vw,1.08rem);
+      font-weight:800;
+      letter-spacing:-.025em;
+      line-height:1;
+    }
+
+    .ade-card{
+      margin-top:16px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:26px;
+      background:
+        radial-gradient(circle at 82% 18%,rgba(255,255,255,.065),transparent 16rem),
+        var(--panel);
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:22px;
+      align-items:end;
+    }
+
+    .ade-copy{
+      max-width:640px;
+    }
+
+    .ade-card h3{
+      font-size:clamp(2rem,5.5vw,4rem);
+      line-height:.9;
+      letter-spacing:-.055em;
+      max-width:900px;
+      margin-top:10px;
+    }
+
+    .ade-sub{
+      color:var(--muted);
+      max-width:420px;
+      margin-top:12px;
+      font-size:.95rem;
+    }
+
+    /* BUILDING */
+    .building-card{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:clamp(26px,4.5vw,54px);
+      background:
+        radial-gradient(circle at 78% 15%,rgba(255,255,255,.07),transparent 22rem),
+        linear-gradient(180deg,#0d0d0d,#090909);
+      display:flex;
+      flex-direction:column;
+      gap:30px;
+    }
+
+    .building-main{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:28px;
+      align-items:start;
+    }
+
+    .building-title{
+      font-size:clamp(4rem,11vw,9rem);
+      line-height:.74;
+      letter-spacing:-.08em;
+      font-weight:900;
+    }
+
+    .building-side{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      justify-content:space-between;
+      height:100%;
+    }
+
+    .building-copy{
+      max-width:520px;
+      font-size:clamp(1.05rem,2.1vw,1.4rem);
+      line-height:1.18;
+      letter-spacing:-.022em;
+    }
+
+    .building-copy span{color:var(--muted)}
+
+    .building-pills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .building-pill{
+      border:1px solid #303030;
+      border-radius:999px;
+      padding:9px 12px;
+      font-size:.76rem;
+      color:#d0d0cb;
+    }
+
+    .building-footer{
+      border-top:1px solid var(--line);
+      padding-top:22px;
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    /* PRINCIPLES */
+    .principles{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .principle{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:28px;
+      min-height:290px;
+      background:#0a0a0a;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .principle h3{
+      font-size:clamp(1.9rem,3.6vw,3.4rem);
+      line-height:.95;
+      letter-spacing:-.05em;
+    }
+
+    .principle p{
+      color:var(--muted);
+      font-size:.9rem;
+      max-width:300px;
+    }
+
+    /* CONTACT */
+    .contact{
+      min-height:78svh;
+      display:flex;
+      align-items:flex-end;
+      padding:120px 0 40px;
+      border-top:1px solid var(--line);
+    }
+
+    .contact-title{
+      font-size:clamp(4rem,14vw,11rem);
+      line-height:.78;
+      letter-spacing:-.08em;
+      font-weight:900;
+      max-width:1000px;
+    }
+
+    .contact-title span{color:#5f5f5f}
+
+    .contact-links{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:42px;
+    }
+
+    footer{
+      margin-top:78px;
+      padding-top:22px;
+      border-top:1px solid var(--line);
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      color:#676767;
+      font-size:.7rem;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+    }
+
+    @media(max-width:960px){
+      .status-grid{grid-template-columns:repeat(2,1fr)}
+      .status-item:nth-child(2){border-right:0}
+      .status-item:nth-child(-n+2){border-bottom:1px solid var(--line)}
+
+      .manifesto,
+      .music-layout,
+      .building-main{
+        grid-template-columns:1fr;
+      }
+
+      .manifesto-stack{
+        grid-template-rows:auto;
+      }
+
+      .manifesto-card,
+      .manifesto-card.big{
+        min-height:300px;
+      }
+
+      .ade-card{grid-template-columns:1fr}
+      .building-footer{justify-content:flex-start}
+      .principles{grid-template-columns:1fr}
+      .principle{min-height:220px}
+    }
+
+    @media(max-width:760px){
+      .nav-links{
+        position:fixed;
+        top:70px;
+        left:16px;
+        right:16px;
+        display:none;
+        flex-direction:column;
+        align-items:stretch;
+        background:#0b0b0b;
+        border:1px solid var(--line);
+        border-radius:16px;
+        padding:14px;
+      }
+
+      .nav-links.open{display:flex}
+      .menu-btn{display:block}
+
+      .hero-bottom,
+      .section-head{
+        grid-template-columns:1fr;
+      }
+
+      .hero-actions{justify-content:flex-start}
+      .section-head{gap:14px}
+      .played-grid{gap:8px}
+    }
+
+    @media(max-width:520px){
+      .container{width:min(calc(100% - 24px),var(--max))}
+      .hero{padding-top:106px}
+      .hero-topline{flex-direction:column;gap:8px}
+      .hero-title{font-size:clamp(5.4rem,30vw,8rem)}
+      .section{padding:78px 0}
+
+      .status-grid{grid-template-columns:1fr}
+      .status-item{
+        border-right:0!important;
+        border-bottom:1px solid var(--line)!important;
+        min-height:135px;
+      }
+      .status-item:last-child{border-bottom:0!important}
+
+      .ade-card{padding:22px}
+      .building-card{gap:24px}
+      .building-title{font-size:clamp(3.5rem,18vw,5.2rem)}
+      .building-footer .btn{width:100%}
+
+      footer{flex-direction:column}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="noise"></div>
+
+  <nav id="nav">
+    <div class="container nav-inner">
+      <a class="wordmark" href="#top">MØRS</a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#music">Music</a></li>
+        <li><a href="#live">Live</a></li>
+        <li><a href="#building">Building</a></li>
+        <li><a href="#contact" class="nav-cta">Contact</a></li>
+      </ul>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container">
+        <div class="hero-topline reveal">
+          <span class="label">Maurizio Morselli</span>
+          <span class="label">DJ / Producer · Founder</span>
+        </div>
+
+        <h1 class="hero-title reveal">MØRS</h1>
+
+        <div class="hero-bottom reveal">
+          <div class="hero-copy">
+            Music. Nightlife. <span>Building things.</span>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="https://open.spotify.com/artist/0SoZjz8M4il36OsUPCRcVF" target="_blank" rel="noopener">Listen ↗</a>
+            <a class="btn" href="#building">Projects</a>
+            <a class="btn" href="mailto:maurizio@morselli.com">Booking</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="status-strip">
+      <div class="container status-grid reveal">
+        <div class="status-item">
+          <div class="label">Own releases</div>
+          <div class="status-value">500K+</div>
+          <div class="status-note">Streams across MØRS releases.</div>
+        </div>
+
+        <div class="status-item">
+          <div class="label">Production credits</div>
+          <div class="status-value">1.5M+</div>
+          <div class="status-note">Streams across credited productions.</div>
+        </div>
+
+        <div class="status-item">
+          <div class="label">Selected experience</div>
+          <div class="status-value">ADE</div>
+          <div class="status-note">Amsterdam Dance Event 2025.</div>
+        </div>
+
+        <div class="status-item">
+          <div class="label">Current chapter</div>
+          <div class="status-value">2026</div>
+          <div class="status-note">Artist growth + Thread Group launch.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="label">Positioning / 01</div>
+          <div>
+            <h2 class="section-title">Not just<br>behind the booth.</h2>
+            <p class="section-copy">
+              MØRS is the artist. Maurizio is the person behind it — producing music,
+              building nightlife projects and connecting creative people around one direction.
+            </p>
+          </div>
+        </div>
+
+        <div class="manifesto">
+          <article class="manifesto-card big reveal">
+            <div class="label">The artist</div>
+            <h3>Club music.<br>Real rooms.<br>Real energy.</h3>
+            <p>
+              DJ sets, productions and releases built around the culture that started everything.
+            </p>
+          </article>
+
+          <div class="manifesto-stack">
+            <article class="manifesto-card reveal">
+              <div class="label">The builder</div>
+              <h3>I never wanted to be only a DJ.</h3>
+              <p>
+                The bigger goal is creating projects, teams and opportunities around music and nightlife.
+              </p>
+            </article>
+
+            <article class="manifesto-card reveal">
+              <div class="label">The person</div>
+              <h3>Ambition without the costume.</h3>
+              <p>
+                Serious about the work. Not interested in pretending to have already arrived.
+              </p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="music">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="label">Music / 02</div>
+          <div>
+            <h2 class="section-title">The starting<br>point.</h2>
+            <p class="section-copy">
+              The music stays at the center. Everything else grows around it.
+            </p>
+          </div>
+        </div>
+
+        <div class="music-layout">
+          <article class="music-card reveal">
+            <div>
+              <div class="label">Selected releases</div>
+              <h3>MØRS<br>MUSIC</h3>
+            </div>
+
+            <div>
+              <div class="release-list">
+                <a class="release" href="https://open.spotify.com/artist/0SoZjz8M4il36OsUPCRcVF" target="_blank" rel="noopener">
+                  <small>01</small><strong>JAMMED UP</strong><span>2026 ↗</span>
+                </a>
+                <a class="release" href="https://open.spotify.com/artist/0SoZjz8M4il36OsUPCRcVF" target="_blank" rel="noopener">
+                  <small>02</small><strong>ME VA PERDER</strong><span>2026 ↗</span>
+                </a>
+                <a class="release" href="https://open.spotify.com/artist/0SoZjz8M4il36OsUPCRcVF" target="_blank" rel="noopener">
+                  <small>03</small><strong>HEY — RICK&amp;MORS</strong><span>2025 ↗</span>
+                </a>
+                <a class="release" href="https://open.spotify.com/artist/0SoZjz8M4il36OsUPCRcVF" target="_blank" rel="noopener">
+                  <small>04</small><strong>FAVORITE SOUND</strong><span>2023 ↗</span>
+                </a>
+              </div>
+
+              <div style="margin-top:22px">
+                <a class="btn primary" href="https://open.spotify.com/artist/0SoZjz8M4il36OsUPCRcVF" target="_blank" rel="noopener">Open Spotify ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="proof-card reveal">
+            <div class="label">Proof of work</div>
+            <div class="proof-number">1.5M+</div>
+            <div class="proof-copy">
+              Streams across credited productions. Building as an artist also means building behind the music.
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="live">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="label">Live / 03</div>
+          <div>
+            <h2 class="section-title">Different cities.<br>Same energy.</h2>
+            <p class="section-copy">
+              A compact view of the places touched by the MØRS live journey.
+            </p>
+          </div>
+        </div>
+
+        <div class="label reveal" style="margin-bottom:14px">Played in</div>
+
+        <div class="played-wrap reveal">
+          <div class="played-grid">
+            <div class="played">AMS</div>
+            <div class="played">MI</div>
+            <div class="played">RN</div>
+            <div class="played">PU</div>
+            <div class="played">RA</div>
+            <div class="played">FE</div>
+            <div class="played">RE</div>
+            <div class="played">MO</div>
+            <div class="played">PD</div>
+            <div class="played">VI</div>
+            <div class="played">SA</div>
+          </div>
+        </div>
+
+        <article class="ade-card reveal">
+          <div class="ade-copy">
+            <div class="label">Selected experience</div>
+            <h3>AMSTERDAM DANCE EVENT 2025</h3>
+            <p class="ade-sub">
+              A clear proof point in the current MØRS journey and one of the strongest experiences highlighted on this page.
+            </p>
+          </div>
+
+          <a class="btn" href="#building">Next chapter</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="building">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="label">Building / 04</div>
+          <div>
+            <h2 class="section-title">The next<br>chapter.</h2>
+            <p class="section-copy">
+              The artist brand is one part of a bigger structure built around music, content, events and creative work.
+            </p>
+          </div>
+        </div>
+
+        <article class="building-card reveal">
+          <div class="label">Launching October 2026</div>
+
+          <div class="building-main">
+            <div class="building-title">THREAD<br>GROUP</div>
+
+            <div class="building-side">
+              <div class="building-copy">
+                Different skills. One thread.
+                <span>
+                  Music, events, booking, content, digital and web connected under one direction.
+                </span>
+              </div>
+
+              <div class="building-pills">
+                <span class="building-pill">Music</span>
+                <span class="building-pill">Events</span>
+                <span class="building-pill">Booking</span>
+                <span class="building-pill">Content</span>
+                <span class="building-pill">Digital</span>
+                <span class="building-pill">Web</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="building-footer">
+            <a class="btn primary" href="https://thread-group.github.io/ThreadGroup/" target="_blank" rel="noopener">Explore Thread ↗</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="label">Mindset / 05</div>
+          <div>
+            <h2 class="section-title">What I’m<br>building around.</h2>
+          </div>
+        </div>
+
+        <div class="principles">
+          <article class="principle reveal">
+            <div class="label">01</div>
+            <h3>Work first.<br>Image second.</h3>
+            <p>
+              The image should amplify the work, not replace it.
+            </p>
+          </article>
+
+          <article class="principle reveal">
+            <div class="label">02</div>
+            <h3>Build with<br>the right people.</h3>
+            <p>
+              Bigger projects need different skills moving in the same direction.
+            </p>
+          </article>
+
+          <article class="principle reveal">
+            <div class="label">03</div>
+            <h3>Keep<br>moving.</h3>
+            <p>
+              No interest in looking finished. The point is to keep becoming better.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="container reveal">
+        <div class="label" style="margin-bottom:24px">Contact / Booking</div>
+
+        <h2 class="contact-title">Let’s build<br><span>something.</span></h2>
+
+        <div class="contact-links">
+          <a class="btn primary" href="mailto:maurizio@morselli.com">maurizio@morselli.com</a>
+          <a class="btn" href="https://instagram.com/maurizio_morselli" target="_blank" rel="noopener">Instagram ↗</a>
+          <a class="btn" href="https://open.spotify.com/artist/0SoZjz8M4il36OsUPCRcVF" target="_blank" rel="noopener">Spotify ↗</a>
+          <a class="btn" href="https://thread-group.github.io/ThreadGroup/" target="_blank" rel="noopener">Thread Group ↗</a>
+        </div>
+
+        <footer>
+          <span>© <span id="year"></span> Maurizio Morselli / MØRS</span>
+          <span>Music · Nightlife · Building things</span>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const nav = document.getElementById('nav');
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 18);
+    });
+
+    menuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:.08});
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
